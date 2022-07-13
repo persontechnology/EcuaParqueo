@@ -125,7 +125,7 @@ export default function AlertaEspecial({ navigation }) {
         )
 
     } else {
-        return <View><Text>CARGANDO</Text></View>
+        return <></>
     }
 
 }

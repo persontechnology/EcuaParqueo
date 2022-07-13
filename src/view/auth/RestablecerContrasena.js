@@ -69,7 +69,7 @@ export default function RestablecerContrasena({navigation}) {
                             onChangeText={setemail} keyboardType="email-address" />
                         </FormControl>
                         
-                        <Button mt="2" colorScheme="primary" isLoading={cargando} onPress={acceder}>
+                        <Button mt="2" colorScheme="emerald" isLoading={cargando} onPress={acceder}>
                             Restablecer contraseña
                         </Button>
                         <HStack mt="6" justifyContent="center">

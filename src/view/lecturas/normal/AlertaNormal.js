@@ -131,6 +131,6 @@ export default function AlertaNormal({ navigation }) {
         )
 
     } else {
-        return <View><Text>CARGANDO</Text></View>
+        return <></>
     }
 }

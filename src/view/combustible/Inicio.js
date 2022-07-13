@@ -21,8 +21,8 @@ import { API_URL } from "@env";
 export default function Inicio({ navigation }) {
 
     const [finalizarConsulta, setfinalizarConsulta] = useState(false);
-    const [placa, setplaca] = useState('XBA-0051');
-    const [codigo, setcodigo] = useState('KBK5YS');
+    const [placa, setplaca] = useState('XBA-0018');
+    const [codigo, setcodigo] = useState('SHGNPR');
     const { userRolesPermisos, userToken } = useContext(AuthContext);
     const toast = useToast();
 
@@ -85,14 +85,14 @@ export default function Inicio({ navigation }) {
                         <Box>Ingrese placa y código</Box>
                         <FormControl isRequired>
                             <FormControl.Label>PLACA</FormControl.Label>
-                            <Input value={placa} onChangeText={setplaca} />
+                            <Input value={placa} onChangeText={setplaca}  />
                         </FormControl>
                         <FormControl isRequired>
                             <FormControl.Label>CÓDIGO</FormControl.Label>
                             <Input value={codigo} onChangeText={setcodigo} />
                         </FormControl>
 
-                        <Button colorScheme="primary" isLoadingText={"Finalizando revisión"} isLoading={finalizarConsulta} onPress={() => guardar()}>
+                        <Button colorScheme="emerald" isLoadingText={"Finalizando revisión"} isLoading={finalizarConsulta} onPress={() => guardar()}>
                             Consultar
                         </Button>
                     </VStack>

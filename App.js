@@ -1,6 +1,5 @@
 
 import * as React from 'react';
-import { Button, Text, TextInput, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Intro from './src/view/Intro';
@@ -80,7 +79,7 @@ export default function App({ navigation }) {
         // Restore token stored in `SecureStore` or any other encrypted storage
         // userToken = await SecureStore.getItemAsync('userToken');
 
-        userToken = await AsyncStorage.getItemAsync('userToken');
+        userToken = await AsyncStorage.getItem('userToken');
         userName = await AsyncStorage.getItem('userName');
         userEmail = await AsyncStorage.getItem('userEmail');
         userId = await AsyncStorage.getItem('userId');
@@ -169,16 +168,28 @@ export default function App({ navigation }) {
   return (
     <AuthContext.Provider value={{ ...state,...authContext }}>
        <NativeBaseProvider>
+       <StatusBar translucent backgroundColor="transparent" />
         <NavigationContainer>
           
             {state.isLoading ? (
               // We haven't finished checking for the token yet
-              <Stack.Navigator>
+              <Stack.Navigator screenOptions={{ 
+                headerShown:false
+               }}>
                 <Stack.Screen name="Splash" component={Cargando} />
               </Stack.Navigator>
             ) : state.userToken == null ? (
               // No token found, user isn't signed in
-              <Stack.Navigator>
+              <Stack.Navigator screenOptions={{
+                headerStyle: {
+                  backgroundColor: '#047857',
+                },
+                headerTintColor: '#fff',
+                headerTitleStyle: {
+                  fontWeight: 'bold',
+                },
+              }}>
+                
                 <Stack.Screen
                   name="Intro"
                   component={Intro}

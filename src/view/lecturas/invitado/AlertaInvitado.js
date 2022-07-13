@@ -102,7 +102,7 @@ export default function AlertaInvitado({navigation}) {
         )    
         
     }else{
-        return <View><Text>CARGANDO</Text></View>
+        return <></>
     }
   
 }

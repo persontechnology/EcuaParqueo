@@ -8,6 +8,7 @@ import ReactNativeBlobUtil from 'react-native-blob-util'
 
 
 export default function Detalle({ route, navigation }) {
+  const urlFotoCamara="https://pixsector.com/cache/d01b7e30/av7801257c459e42a24b5.png";
   const {
     cantidad_galones,
     cantidad_letras,
@@ -35,17 +36,23 @@ export default function Detalle({ route, navigation }) {
   const [cargando, setcargando] = useState(false);
 
   const [imageData, setimageData] = useState('');
-  const [imagePath, setimagePath] = useState('https://pixsector.com/cache/d01b7e30/av7801257c459e42a24b5.png');
+  const [imagePath, setimagePath] = useState(urlFotoCamara);
+  const [mostrarBotonFinalizar, setmostrarBotonFinalizar] = useState(false);
 
-  const tomarFoto = () => {
-    ImagePicker.openCamera({
-      width: 300,
-      height: 400,
-      includeBase64: true
-    }).then(image => {
-      setimageData(image.data)
-      setimagePath(image.path)
-    });
+  const tomarFoto =async () => {
+     try {
+      await ImagePicker.openCamera({
+        width: 300,
+        height: 400,
+        includeBase64: true,
+        cropping:true
+      }).then(image => {
+         setimageData(image.data)
+         setimagePath(image.path)
+      });
+     } catch (error) {
+      
+     }
   }
 
   const enviarFotox = async () => {
@@ -71,8 +78,8 @@ export default function Detalle({ route, navigation }) {
         setService('');
         setestaciones([]);
         setcargando(false);
-
-        navigation.goBack();
+        setmostrarBotonFinalizar(true);
+        setimagePath(urlFotoCamara)
       }
       if (data === 'no') {
         toast.show({ 'description': 'Ocurrio un error, vuelva intentar.' })
@@ -153,7 +160,6 @@ export default function Detalle({ route, navigation }) {
             <Text>{"Código: " + codigo}</Text>
             <Text>{"Galones: " + cantidad_galones + " (" + cantidad_letras + ")"}</Text>
             <Text>{"Efectivo: " + valor + " (" + valor_letras + ")"}</Text>
-            <Text>{API_URL}</Text>
 
             <HStack alignItems="center" space={4} justifyContent="space-between">
               <HStack alignItems="center">
@@ -208,9 +214,21 @@ export default function Detalle({ route, navigation }) {
             </Pressable>
 
 
-            <Button mt="2" colorScheme="primary" onPress={enviarFotox} isLoadingText={"Enviando..."} isLoading={cargando}>
-              Enviar
-            </Button>
+           
+            {
+              mostrarBotonFinalizar?(
+                <Button mt="2" colorScheme="danger" onPress={()=>navigation.goBack()}>
+                  Finalizar despacho
+                </Button>
+              ):(
+                <Button mt="2" colorScheme="emerald" onPress={enviarFotox} isLoadingText={"Enviando..."} isLoading={cargando}>
+                  Enviar
+                </Button>
+              )
+            }
+            
+
+            
           </Box> : <></>
         }
 

@@ -89,7 +89,7 @@ export default function Perfil({ navigation }) {
                                 Roles: {userRolesPermisos}
                             </Text>
                         </Stack>
-                        <Button variant={"subtle"} onPress={() => signOut()} colorScheme="primary" leftIcon={
+                        <Button variant={"solid"} onPress={() => signOut()} colorScheme="danger" leftIcon={
                             <Icon as={Entypo} name="log-out" size="sm" />
                         }>
                             Cerrar sessión
@@ -132,7 +132,7 @@ export default function Perfil({ navigation }) {
                                 }
                             />
                         </FormControl>
-                        <Button mt="2" isLoading={cargando} isLoadingText="Procesando..." colorScheme={"info"} onPress={acceder}>
+                        <Button mt="2" isLoading={cargando} isLoadingText="Procesando..." colorScheme={"emerald"} onPress={acceder}>
                             {cargando ? 'Procesando' : 'Actualizar'}
                         </Button>
 

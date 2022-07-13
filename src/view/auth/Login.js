@@ -95,7 +95,7 @@ export default function Login({navigation}) {
                                 ¿Olvidaste tu contraseña?
                             </Link>
                         </FormControl>
-                        <Button mt="2" colorScheme="primary" isLoading={cargando} onPress={acceder}>
+                        <Button mt="2" colorScheme="emerald" isLoading={cargando} onPress={acceder}>
                             Ingresar
                         </Button>
                         <HStack mt="6" justifyContent="center">

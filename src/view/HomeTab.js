@@ -14,10 +14,11 @@ export default function HomeTab() {
 
   return (
     
-      <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Navigator screenOptions={{ headerShown: false,tabBarActiveTintColor:"#047857" }}>
 
         <Tab.Screen name="TabHome" component={HomeStackScreen}  options={{
           tabBarLabel: 'Inicio',
+          
           tabBarIcon: ({ color, size }) => (
             <Icon as={Entypo} name="home" color={color} size={size} />
           ),

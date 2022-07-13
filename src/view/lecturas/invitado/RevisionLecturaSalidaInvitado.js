@@ -154,7 +154,7 @@ export default function RevisionLecturaSalidaInvitado({ route, navigation }) {
                                 <FormControl.Label>Placa:</FormControl.Label>
                                 <Input value={placa} onChangeText={setplaca} />
                             </FormControl>
-                            <Button colorScheme="primary" isLoadingText={"Finalizando revisión"} isLoading={finalizarRevision} onPress={() => guardar()}>
+                            <Button colorScheme="emerald" isLoadingText={"Finalizando revisión"} isLoading={finalizarRevision} onPress={() => guardar()}>
                                 Guardar
                             </Button>
                             <Button colorScheme="danger" isLoadingText={"Eliminando"} isLoading={finalizarEliminar} onPress={() => eliminar()}>

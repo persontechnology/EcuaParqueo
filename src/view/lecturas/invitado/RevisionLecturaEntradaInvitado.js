@@ -180,7 +180,7 @@ export default function RevisionLecturaEntradaInvitado({ route, navigation }) {
                                 }
                             </Select>
                         </FormControl>
-                        <Button colorScheme="primary" isLoadingText={"Finalizando revisión"} isLoading={finalizarRevision} onPress={() => guardar()}>
+                        <Button colorScheme="emerald" isLoadingText={"Finalizando revisión"} isLoading={finalizarRevision} onPress={() => guardar()}>
                             Guardar
                         </Button>
                         <Button colorScheme="danger" isLoadingText={"Eliminando"} isLoading={finalizarEliminar} onPress={() => eliminar()}>

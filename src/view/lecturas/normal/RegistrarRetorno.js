@@ -151,9 +151,9 @@ export default function RegistrarRetorno({ route, navigation }) {
     return cargando ? (
         <Cargando />
     ) : (
-        <ScrollView>
+        <ScrollView contentContainerStyle={{ flexGrow:1 }}>
             <Center flex={1}>
-                <Box maxW="96" mx={3} my={1} borderWidth="1" borderColor="coolGray.300" shadow="3" bg="coolGray.100" p="5" rounded="8">
+                <Box minWidth={"95%"} mx={3} my={1} borderWidth="1" borderColor="coolGray.300" shadow="3" bg="coolGray.100" p="5" rounded="8">
                     <Badge>{"Lectura: " + lectura.estado}</Badge>
                     <Heading size="lg" fontWeight="600" color="coolGray.800" _dark={{
                         color: "warmGray.50"
@@ -192,10 +192,10 @@ export default function RegistrarRetorno({ route, navigation }) {
                         </FormControl>
 
 
-                        <Button mt="2" isLoading={enviandoRegistro} isLoadingText="Procesando..." colorScheme={"info"} onPress={registrar}>
+                        <Button mt="2" isLoading={enviandoRegistro} isLoadingText="Procesando..." colorScheme={"emerald"} onPress={registrar}>
                             {enviandoRegistro ? 'Procesando' : 'Registrar'}
                         </Button>
-                        <Button mt="2" isLoading={enviandoCancelar} isLoadingText="Cancelando" colorScheme="primary" onPress={cancelar}>
+                        <Button mt="1" isLoading={enviandoCancelar} isLoadingText="Cancelando" colorScheme="danger" onPress={cancelar}>
                             Cancelar
                         </Button>
                     </VStack>

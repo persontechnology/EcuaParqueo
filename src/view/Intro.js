@@ -11,19 +11,19 @@ const data = [
       title: API_NAME,
       text: 'Mantén el control de uno o más espacios destinados al estacionamiento de vehículos.',
       image: require('../public/img/1.png'),
-      bg: '#59b2ab',
+      bg: '#fb923c',
     },
     {
       title: 'Registro de vehículo, ya sea motocicleta, auto, camionetas, etcétera.',
       text: 'Simplifica tu gestión con nuestra plataforma, utilizando dispositivos móviles y aplicación web.',
       image: require('../public/img/2.png'),
-      bg: '#febe29',
+      bg: '#22d3ee',
     },
     {
       title: 'App Smartphone',
       text: "Sus clientes podrán consultar las tarifas, entrar al estacionamiento y pagar con el smartphone.",
       image: require('../public/img/3.png'),
-      bg: '#22bcb5',
+      bg: '#34d399',
     },
   ];
 
@@ -105,7 +105,7 @@ export default function Intro({navigation}) {
 
   return (
     <View style={{flex: 1}}>
-    {/* <StatusBar translucent backgroundColor="transparent" /> */}
+    <StatusBar translucent backgroundColor="transparent" />
     <AppIntroSlider
       keyExtractor={_keyExtractor}
       renderDoneButton={_renderDoneButton}

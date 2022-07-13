@@ -15,7 +15,15 @@ const HomeStack = createNativeStackNavigator();
 
 export default function HomeStackScreen({navigation}) {
     return (
-        <HomeStack.Navigator>
+        <HomeStack.Navigator screenOptions={{
+            headerStyle: {
+              backgroundColor: '#047857',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}>
             <HomeStack.Screen
                 name="Home"
                 component={Inicio}
@@ -23,7 +31,7 @@ export default function HomeStackScreen({navigation}) {
                     title: API_NAME,
                     headerRight: () => (
                         <Pressable onPress={() => navigation.navigate('Perfil')}>
-                            <Icon as={FontAwesome} name="user-o" size={25} color="primary.700"></Icon>
+                            <Icon as={FontAwesome} name="user-o" size={25} color="white"></Icon>
                         </Pressable>
                     )
                 }}
