@@ -11,8 +11,8 @@ import * as Animatable from 'react-native-animatable';
 export default function Login({navigation}) {
 
     const [verPassword, setverPassword] = useState(false);
-    const [username, setUsername] = useState('david.criollo14@gmail.com');
-    const [password, setPassword] = useState('123456789');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const [show, setShow] = useState(false);
     const toast = useToast();
     const [cargando, setcargando] = useState(false);

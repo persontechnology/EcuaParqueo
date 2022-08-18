@@ -6,9 +6,10 @@ import ImagePicker from 'react-native-image-crop-picker';
 import * as Animatable from 'react-native-animatable';
 import ReactNativeBlobUtil from 'react-native-blob-util'
 
+import { BottomSheet,ListItem } from '@rneui/themed';
 
 export default function Detalle({ route, navigation }) {
-  const urlFotoCamara="https://pixsector.com/cache/d01b7e30/av7801257c459e42a24b5.png";
+  const urlFotoCamara = "https://pixsector.com/cache/d01b7e30/av7801257c459e42a24b5.png";
   const {
     cantidad_galones,
     cantidad_letras,
@@ -38,21 +39,24 @@ export default function Detalle({ route, navigation }) {
   const [imageData, setimageData] = useState('');
   const [imagePath, setimagePath] = useState(urlFotoCamara);
   const [mostrarBotonFinalizar, setmostrarBotonFinalizar] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [nombreEstacion, setnombreEstacion] = useState('Sin estación');
 
-  const tomarFoto =async () => {
-     try {
+
+  const tomarFoto = async () => {
+    try {
       await ImagePicker.openCamera({
         width: 300,
         height: 400,
         includeBase64: true,
-        cropping:true
+        cropping: true
       }).then(image => {
-         setimageData(image.data)
-         setimagePath(image.path)
+        setimageData(image.data)
+        setimagePath(image.path)
       });
-     } catch (error) {
-      
-     }
+    } catch (error) {
+
+    }
   }
 
   const enviarFotox = async () => {
@@ -66,11 +70,11 @@ export default function Detalle({ route, navigation }) {
       }, [
         { name: 'foto', filename: 'avatar.png', data: imageData },
         { name: 'id', data: id.toString() },
-        { name: 'service', data: service.toString() },
+        { name: 'estacion', data: service.toString() },
       ]);
 
       const data = await res.json();
-      
+
 
       if (data === 'ok') {
         toast.show({ 'description': 'Despacho finalizado' });
@@ -136,7 +140,15 @@ export default function Detalle({ route, navigation }) {
 
   useEffect(() => {
     consultarEstaciones();
-  }, [])
+  }, []);
+
+  function asignarEstacion(id,nombre){
+    setService(id);
+    setnombreEstacion(nombre);
+    setIsVisible(false);
+}
+
+
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <Center flex={1}>
@@ -178,7 +190,7 @@ export default function Detalle({ route, navigation }) {
           cargandoEstaciones ? <Box w="95%" >
             <FormControl isRequired isInvalid>
               <FormControl.Label>Selecione una estación</FormControl.Label>
-              <Select selectedValue={service} defaultValue={""} minWidth="200" accessibilityLabel="Selecione estación" placeholder="Selecione estación" _selectedItem={{
+              {/* <Select selectedValue={service} defaultValue={""} minWidth="200" accessibilityLabel="Selecione estación" placeholder="Selecione estación" _selectedItem={{
                 bg: "teal.600",
 
                 endIcon: <CheckIcon size="5" />
@@ -189,7 +201,44 @@ export default function Detalle({ route, navigation }) {
                   })
                 }
 
-              </Select>
+              </Select> */}
+
+              <Button
+                variant={"outline"}
+                onPress={() => setIsVisible(true)}
+              >{nombreEstacion}</Button>
+
+              <BottomSheet modalProps={{}} isVisible={isVisible} onBackdropPress={() => setIsVisible(false)}>
+                <ListItem
+                  key={"a"}
+                  onPress={() => asignarEstacion("","Sin estación")}
+                >
+                  <ListItem.Content>
+                    <ListItem.Title >{"Sin estación"}</ListItem.Title>
+                  </ListItem.Content>
+                </ListItem>
+                {estaciones.map((l, i) => (
+                  <ListItem
+                    key={i}
+                    containerStyle={l.containerStyle}
+                    onPress={() => asignarEstacion(l.id,l.nombre)}
+                  >
+                    <ListItem.Content>
+                      <ListItem.Title style={l.titleStyle}>{l.nombre}</ListItem.Title>
+                    </ListItem.Content>
+                  </ListItem>
+                ))}
+                <ListItem
+                  key={"aa"}
+                  containerStyle={{ backgroundColor: 'red' }}
+                  onPress={() => setIsVisible(false)}
+                >
+                  <ListItem.Content>
+                    <ListItem.Title style={{ color: "white" }}>{"Cancelar"}</ListItem.Title>
+                  </ListItem.Content>
+                </ListItem>
+              </BottomSheet>
+
             </FormControl>
 
 
@@ -214,21 +263,21 @@ export default function Detalle({ route, navigation }) {
             </Pressable>
 
 
-           
+
             {
-              mostrarBotonFinalizar?(
-                <Button mt="2" colorScheme="danger" onPress={()=>navigation.goBack()}>
+              mostrarBotonFinalizar ? (
+                <Button mt="2" colorScheme="danger" onPress={() => navigation.goBack()}>
                   Finalizar despacho
                 </Button>
-              ):(
+              ) : (
                 <Button mt="2" colorScheme="emerald" onPress={enviarFotox} isLoadingText={"Enviando..."} isLoading={cargando}>
                   Enviar
                 </Button>
               )
             }
-            
 
-            
+
+
           </Box> : <></>
         }
 

@@ -21,8 +21,8 @@ import { API_URL } from "@env";
 export default function Inicio({ navigation }) {
 
     const [finalizarConsulta, setfinalizarConsulta] = useState(false);
-    const [placa, setplaca] = useState('XBA-0018');
-    const [codigo, setcodigo] = useState('SHGNPR');
+    const [placa, setplaca] = useState('');
+    const [codigo, setcodigo] = useState('');
     const { userRolesPermisos, userToken } = useContext(AuthContext);
     const toast = useToast();
 

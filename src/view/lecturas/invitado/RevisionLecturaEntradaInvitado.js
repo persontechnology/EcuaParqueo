@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react'
 import { View, Text, useToast, HStack, Spinner, Heading, Center, Box, VStack, FormControl, Input, Button, Select, CheckIcon, ScrollView } from 'native-base';
 import { API_URL } from "@env";
 import { AuthContext } from '../../../service/AuthContext';
+import { BottomSheet,ListItem } from '@rneui/themed';
 
 export default function RevisionLecturaEntradaInvitado({ route, navigation }) {
     const { id } = route.params;
@@ -10,11 +11,14 @@ export default function RevisionLecturaEntradaInvitado({ route, navigation }) {
     const { userToken } = useContext(AuthContext);
     const [lectura, setlectura] = useState();
     const [espacios, setespacios] = useState([]);
-    const [placa, setplaca] = useState("SXA-2412");
-    const [motivo, setmotivo] = useState("NA");
+    const [placa, setplaca] = useState("");
+    const [motivo, setmotivo] = useState("");
     const [espacio, setespacio] = useState("");
     const [finalizarRevision, setfinalizarRevision] = useState(false);
     const [finalizarEliminar, setfinalizarEliminar] = useState(false);
+
+    const [isVisible, setIsVisible] = useState(false);
+
 
     const acceder = async () => {
         try {
@@ -128,7 +132,12 @@ export default function RevisionLecturaEntradaInvitado({ route, navigation }) {
         acceder();
         setfinalizarRevision(false);
         setfinalizarEliminar(false);
-    }, [])
+    }, []);
+
+    function asignarEspacio(id){
+        setespacio(id);
+        setIsVisible(false);
+    }
 
     if (cargando) {
         return (
@@ -164,29 +173,57 @@ export default function RevisionLecturaEntradaInvitado({ route, navigation }) {
                             <Input value={motivo} onChangeText={setmotivo} />
                         </FormControl>
                         <FormControl>
+                            
                             <FormControl.Label>Selecione espacio</FormControl.Label>
-                            <Select selectedValue={espacio} accessibilityLabel="Selecione un espacio" placeholder="Selecione un espacio"
-                                _selectedItem={{
-                                    bg: "teal.600",
-                                    endIcon: <CheckIcon size="5" key={"exc01icon"} />
-                                }} mt={1} onValueChange={itemValue => setespacio(itemValue)}>
-                                <Select.Item key={'espacio-0'} label={"Sin espacio"} _selectedItem value={""} />
-                                {
-                                    espacios.map((espacio) => {
-                                        return (
-                                            <Select.Item key={'espacio-' + espacio.id} label={espacio.numero + " - " + espacio.estado} value={espacio.id} />
-                                        )
-                                    })
-                                }
-                            </Select>
+                             <Button
+                             variant={"outline"}
+                                onPress={() => setIsVisible(true)}
+                                >{espacio?espacio:"Sin espacio"}</Button>
+
+                                <BottomSheet modalProps={{}} isVisible={isVisible} onBackdropPress={()=>setIsVisible(false)}>
+                                <ListItem
+                                    key={"a"}
+                                    onPress={()=>asignarEspacio("")}
+                                    >
+                                    <ListItem.Content>
+                                        <ListItem.Title >{"Sin espacio"}</ListItem.Title>
+                                    </ListItem.Content>
+                                </ListItem>
+                                {espacios.map((l, i) => (
+                                    <ListItem
+                                    key={i}
+                                    containerStyle={l.containerStyle}
+                                    onPress={()=>asignarEspacio(l.id)}
+                                    >
+                                    <ListItem.Content>
+                                        <ListItem.Title style={l.titleStyle}>{l.numero+" - "+l.estado}</ListItem.Title>
+                                    </ListItem.Content>
+                                    </ListItem>
+                                ))}
+                                <ListItem
+                                    key={"aa"}
+                                    containerStyle={{ backgroundColor: 'red' }}
+                                    onPress={()=>setIsVisible(false)}
+                                    >
+                                    <ListItem.Content>
+                                        <ListItem.Title style={{color:"white"}}>{"Cancelar"}</ListItem.Title>
+                                    </ListItem.Content>
+                                </ListItem>
+                                </BottomSheet>
+
                         </FormControl>
-                        <Button colorScheme="emerald" isLoadingText={"Finalizando revisión"} isLoading={finalizarRevision} onPress={() => guardar()}>
-                            Guardar
-                        </Button>
-                        <Button colorScheme="danger" isLoadingText={"Eliminando"} isLoading={finalizarEliminar} onPress={() => eliminar()}>
-                            Falsa alarma
-                        </Button>
+                        
                     </VStack>
+                
+                <VStack mt={5}>
+                <Button colorScheme="emerald" isLoadingText={"Finalizando revisión"} isLoading={finalizarRevision} onPress={() => guardar()}>
+                        Guardar
+                    </Button>
+                    <Button colorScheme="danger" isLoadingText={"Eliminando"} isLoading={finalizarEliminar} onPress={() => eliminar()}>
+                        Falsa alarma
+                    </Button>
+                </VStack>
+                
                 </Box>
             </Center>
             </ScrollView>
